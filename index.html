@@ -47,8 +47,8 @@
     }
 
     #message {
-      margin-top: 15px;
-  </style>
+      margin-top: 15px.,
+</style>
 </head>
 
 <body>
@@ -62,18 +62,26 @@
 </div>
 
 <script>
-    // Initialize Telegram Web App
-    const tg = window.Telegram.WebApp;
-    tg.expand(); // Expands the mini app to full screen
-const tg = window.Telegram.WebApp;
+    // Initialize Telegram Web App safely
+    const tg = window.Telegram?.WebApp;
+
+    if (tg) {
+        tg.ready();
+        tg.expand(); // Expands the mini app to full screen
+    }
+
     function openApp() {
-        const user = tg.initDataUnsafe?.user;
-        const userName = user ? user.first_name : "User";
-        
-        document.getElementById("message").textContent = 
-            `Access granted ✅ Welcome, ${userName}!`;
+        try {
+            const user = tg?.initDataUnsafe?.user;
+            const userName = user ? user.first_name : "User";
+            
+            document.getElementById("message").textContent = 
+                `Access granted ✅ Welcome, ${userName}!`;
+        } catch (error) {
+            document.getElementById("message").textContent = 
+                "Access granted ✅ Welcome, Friend!";
+        }
     }
 </script>
 </body>
 </html>
-
